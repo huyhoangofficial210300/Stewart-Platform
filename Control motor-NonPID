@@ -1,0 +1,55 @@
+
+int IN1 =32;
+int IN2 =33;
+int En=13;
+const int pwmChannel = 0;
+const int freq = 30000;
+const int resolution = 8;
+
+void setup()
+{
+  pinMode(IN1,OUTPUT);
+  pinMode(IN2,OUTPUT);
+  pinMode(En,OUTPUT);
+  ledcSetup(pwmChannel, freq, resolution);
+  ledcAttachPin(En, pwmChannel);
+  Serial.begin(115200);
+}
+
+void loop() 
+{
+  setmotor(1,IN1,IN2);
+  
+    setmotor(2,IN1,IN2);
+
+
+
+
+ 
+}
+void setmotor(int sel,int IN1, int IN2)
+{
+  for(int dutyCycle=160;dutyCycle<=255;dutyCycle++)
+  {
+    ledcWrite(pwmChannel, dutyCycle);
+    delay(200);
+    
+    Serial.println(dutyCycle);
+  }
+  
+  if(sel== 1)
+  {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH); 
+  }
+  else if(sel== 2)
+  {
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW); 
+  }
+  else
+  {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, LOW); 
+  }
+}
