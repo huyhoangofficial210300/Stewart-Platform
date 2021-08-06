@@ -1,0 +1,66 @@
+#include <LiquidCrystal_I2C.h>
+#include "mpu6050.h"
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+float tmp;
+float tmp2;
+float tmp3;
+float tmp4;
+float tmp5;
+float tmp6;
+
+void setup()
+{
+  lcd.begin();  
+  lcd.backlight();
+  lcd.setCursor(4,0);
+  lcd.print("Test MPU6050");
+  lcd.setCursor(0,1);
+  lcd.print("ax= ");
+  lcd.setCursor(0,2);
+  lcd.print("ay= ");
+  lcd.setCursor(0,3);
+  lcd.print("az= ");
+  
+  lcd.setCursor(11,1);
+  lcd.print("gx= ");
+  lcd.setCursor(11,2);
+  lcd.print("gy= ");
+  lcd.setCursor(11,3);
+  lcd.print("gz= ");
+  mpu6050();
+  Serial.begin(9600);
+}
+void loop()
+{
+  tmp=map(get_accx(),-16384,16384,-90,90);
+  lcd.setCursor(3,1);
+  lcd.print(tmp);
+  
+  tmp2=map(get_accy(),-16384,16384,-90,90);
+  lcd.setCursor(3,2);
+  lcd.print(tmp2);
+  
+
+  tmp3=map(get_accz(),-16384,16384,-90,90);
+  lcd.setCursor(3,3);
+  lcd.print(tmp3);
+
+  
+  tmp4=map(get_gyrox(),-16384,16384,-90,90);
+  lcd.setCursor(14,1);
+  lcd.print(tmp4);
+  
+  tmp5=map(get_gyroy(),-16384,16384,-90,90);
+  lcd.setCursor(14,2);
+  lcd.print(tmp5);
+  
+  tmp6=map(get_gyroz(),-16384,16384,-90,90);
+  lcd.setCursor(14,3);
+  lcd.print(tmp6);
+  delay(200);
+
+
+
+}
+
+
