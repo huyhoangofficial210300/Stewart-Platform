@@ -1,0 +1,22 @@
+
+#include "mpu6050.h"
+float tmp;
+float tmp2;
+float tmp3;
+
+void setup()
+{
+  mpu6050();
+  Serial.begin(9600);
+}
+void loop()
+{
+  tmp=map(get_accx(),-16384,16384,-90,90);
+    tmp=map(get_gyrox(),-16384,16384,-90,90);
+
+  Serial.println(tmp);
+
+
+}
+
+
